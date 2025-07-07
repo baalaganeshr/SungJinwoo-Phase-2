@@ -1,4 +1,4 @@
-# Day 8 - July 7, 2025
+# Day 7 - July 7, 2025
 
 ## 1353. Maximum Number of Events That Can Be Attended
 

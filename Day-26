@@ -1,0 +1,28 @@
+# Day-26 | 24/7/25  
+LeetCode 13. Roman to Integer (Easy)
+
+---
+
+## 🎯 Problem in one line  
+Convert a **valid Roman-numeral string** into its **integer** value.
+
+---
+
+## ✅ One-Pass O(n) Solution
+
+```python
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        val = {
+            'I': 1, 'V': 5, 'X': 10, 'L': 50,
+            'C': 100, 'D': 500, 'M': 1000
+        }
+        total = 0
+        for i, ch in enumerate(s):
+            cur = val[ch]
+            # if next char is larger, subtract; else add
+            if i + 1 < len(s) and val[s[i + 1]] > cur:
+                total -= cur
+            else:
+                total += cur
+        return total

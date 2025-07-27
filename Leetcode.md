@@ -1919,3 +1919,524 @@ eventTime=20, k=1, startTime=[0,15], endTime=[5,20] → Output: 15
 5. **Optimize space** - could avoid storing all gaps if needed
 
 **This is a clever combination of scheduling and sliding window techniques! 🚀**
+
+
+
+Binary Tree Postorder Traversal
+Date: 10/7/25
+Day: 12
+
+Problem Description
+Given the root of a binary tree, return the postorder traversal of its nodes' values.
+
+Postorder traversal means:
+
+Traverse the left subtree
+
+Traverse the right subtree
+
+Visit the root node
+
+Examples
+Example 1:
+Input: root = [1,null,2,3]
+Output: [3, 2, 1]
+
+Example 2:
+Input: root = [1,2,3,4,5,null,8,null,null,6,7,9]
+Output: [4,6,7,5,2,9,8,3,1]
+
+Example 3:
+Input: root = []
+Output: []
+
+Example 4:
+Input: root = [1]
+Output: [1]
+
+Constraints
+The number of nodes in the tree is in the range [0, 100].
+
+Node values are between -100 and 100.
+
+Explanation
+Postorder traversal means we visit nodes in the order: left child, right child, then the node itself.
+
+A recursive solution is straightforward, but the problem asks if you can do it iteratively (without recursion).
+
+Python Solutions
+Recursive Solution (Simple)
+python
+Copy
+from typing import List, Optional
+
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution:
+    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        if not root:
+            return []
+        return self.postorderTraversal(root.left) + self.postorderTraversal(root.right) + [root.val],
+
+# Day 13: Excel Sheet Column Title (11/7/25)
+
+## Problem Statement
+Convert a given integer to its corresponding Excel column title (1 → "A", 28 → "AB", etc.).
+
+**Constraints:**
+- 1 ≤ columnNumber ≤ 2³¹ - 1
+
+## Examples
+
+Input: 1 → Output: "A"
+Input: 28 → Output: "AB"
+Input: 701 → Output: "ZY"
+
+## Solution Approach
+Base-26 Conversion with Adjustment
+- Treat the numbering as base-26 but with A=1 instead of A=0
+- Repeatedly divide by 26 and get remainders
+- Adjust remainders to map to A-Z (1-26)
+- Build the string in reverse order
+
+```python
+class Solution:
+    def convertToTitle(self, columnNumber: int) -> str:
+        result = []
+        while columnNumber > 0:
+            columnNumber -= 1  # Adjust to 0-based
+            remainder = columnNumber % 26
+            result.append(chr(65 + remainder))  # 65 = 'A'
+            columnNumber //= 26
+        return ''.join(reversed(result))
+```
+
+
+
+# Day 14: Excel Sheet Column Number (12/7/25)
+
+## Problem Statement
+Convert an Excel column title (e.g., "A", "AB", "ZY") to its corresponding column number.
+
+**Constraints:**
+- 1 ≤ columnTitle.length ≤ 7
+- "A" ≤ columnTitle ≤ "FXSHRXW" (max Excel column)
+- Uppercase English letters only
+
+## Examples
+```python
+Input: "A" → 1
+Input: "AB" → 28
+Input: "ZY" → 701
+
+
+class Solution:
+    def titleToNumber(self, columnTitle: str) -> int:
+        result = 0
+        for char in columnTitle:
+            result = result * 26 + (ord(char) - ord('A') + 1)
+        return result
+
+
+```
+
+# Day 15: Majority Element (13/7/25)
+
+## Problem Statement
+Given an array of size n, find the majority element that appears more than ⌊n/2⌋ times. The majority element always exists.
+
+**Constraints:**
+- 1 ≤ n ≤ 5 × 10⁴
+- -10⁹ ≤ nums[i] ≤ 10⁹
+
+## Examples
+```python
+Input: [3,2,3] → Output: 3
+Input: [2,2,1,1,1,2,2] → Output: 2
+
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        count = 0
+        candidate = None
+        
+        for num in nums:
+            if count == 0:
+                candidate = num
+            count += (1 if num == candidate else -1)
+        
+        return candidate
+
+
+```
+# Day 16: Combine Two Tables (14/7/25)
+
+## Problem Statement
+Given two tables `Person` and `Address`, write a SQL query to report each person's first name, last name, city, and state. Include all persons from the Person table even if they don't have an address.
+
+**Tables:**
+```sql
+Person (personId, lastName, firstName)
+Address (addressId, personId, city, state)
+
+
+SELECT 
+    p.firstName,
+    p.lastName,
+    a.city,
+    a.state
+FROM 
+    Person p
+LEFT JOIN 
+    Address a ON p.personId = a.personId
+
+```
+# Day-17 | 15/7/25  
+LeetCode 181. Employees Earning More Than Their Managers (Easy)
+
+---
+
+## 🎯 Problem in one line
+Return the **names** of employees whose salary is **strictly higher** than their **direct manager’s** salary.
+
+---
+
+## ✅ SQL Solution (self-join)
+
+```sql
+SELECT e1.name AS Employee
+FROM Employee e1
+JOIN Employee e2
+  ON e1.managerId = e2.id
+WHERE e1.salary > e2.salary;
+
+
+```
+# Day-18 | 16/7/25  
+LeetCode 182. Duplicate Emails (Easy)
+
+---
+
+## 🎯 Problem in one line
+Return every **email address** that appears **more than once** in the `Person` table.
+
+---
+
+## ✅ SQL Solution (GROUP BY + HAVING)
+
+```sql
+SELECT email AS Email
+FROM Person
+GROUP BY email
+HAVING COUNT(*) > 1;
+
+
+```
+
+# Day-19 | 17/7/25  
+LeetCode 202. Happy Number (Easy)
+
+---
+
+## 🎯 Problem in one line
+Return **true** if repeatedly summing the squares of the digits of `n` eventually reaches **1**, else return **false**.
+
+---
+
+## ✅ Python Solution (Floyd Cycle Detection)
+
+```python
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        def next_num(x):
+            return sum(int(d) ** 2 for d in str(x))
+
+        slow = n          # tortoise
+        fast = next_num(n) # hare
+
+        while fast != 1 and slow != fast:
+            slow = next_num(slow)           # 1 step
+            fast = next_num(next_num(fast)) # 2 steps
+
+        return fast == 1
+
+
+```
+
+# Day-20 | 18/7/25  
+LeetCode 231. Power of Two (Easy)
+
+---
+
+## 🎯 Problem in one line
+Return **true** if the integer `n` is exactly **2^x** for some non-negative integer `x`, else return **false**.
+
+---
+
+## ✅ Optimal Solution (Bit-trick, no loops/recursion)
+
+```python
+class Solution:
+    def isPowerOfTwo(self, n: int) -> bool:
+        return n > 0 and (n & (n - 1)) == 0
+
+
+```
+# Day-21 | 19/7/25  
+LeetCode 88. Merge Sorted Array (Easy)
+
+---
+
+## 🎯 Problem in one line
+Merge two **already-sorted** arrays `nums1` (length `m`) and `nums2` (length `n`) **in-place** into `nums1` so it contains all `m + n` elements in **ascending order**.
+
+---
+
+## ✅ Optimal O(m+n) Solution (Three-Pointer, Backward Merge)
+
+```python
+class Solution:
+    def merge(self, nums1: list[int], m: int, nums2: list[int], n: int) -> None:
+        """
+        Do not return anything, modify nums1 in-place instead.
+        """
+        i, j, k = m - 1, n - 1, m + n - 1
+        
+        while i >= 0 and j >= 0:
+            if nums1[i] > nums2[j]:
+                nums1[k] = nums1[i]
+                i -= 1
+            else:
+                nums1[k] = nums2[j]
+                j -= 1
+            k -= 1
+        
+        # If any leftovers in nums2, copy them over
+        nums1[:j + 1] = nums2[:j + 1]
+```
+# Day-22 | 20/7/25  
+LeetCode 27. Remove Element (Easy)
+
+---
+
+## 🎯 Problem in one line
+Delete **every occurrence** of `val` from array `nums` **in-place** and return the new **length `k`** of the remaining elements (order may change).
+
+---
+
+## ✅ Two-Pointer O(n) Solution
+
+```python
+class Solution:
+    def removeElement(self, nums: list[int], val: int) -> int:
+        k = 0                       # pointer for next non-val position
+        for i in range(len(nums)):
+            if nums[i] != val:
+                nums[k] = nums[i]   # keep it
+                k += 1
+        return k
+```
+
+# Day-23 | 21/7/25  
+LeetCode 80. Remove Duplicates from Sorted Array II (Medium)
+
+---
+
+## 🎯 Problem in one line
+Keep **at most two copies** of every distinct value inside the **sorted** array `nums` **in-place**, and return the new length `k`.
+
+---
+
+## ✅ Two-Pointer O(n) / O(1) Solution
+
+```python
+class Solution:
+    def removeDuplicates(self, nums: list[int]) -> int:
+        if len(nums) <= 2:
+            return len(nums)
+
+        k = 2  # next index to place a kept element
+        for i in range(2, len(nums)):
+            # only keep nums[i] if it differs from the two previous kept ones
+            if nums[i] != nums[k - 2]:
+                nums[k] = nums[i]
+                k += 1
+        return k
+```
+# Day-24 | 22/7/25  
+LeetCode 189. Rotate Array (Medium)
+
+---
+
+## 🎯 Problem in one line
+Rotate the array `nums` **k** steps to the **right** **in-place** (extra space O(1)).
+
+---
+
+## ✅ Optimal O(n) / O(1) Solution (Three-Reversal Trick)
+
+```python
+class Solution:
+    def rotate(self, nums: list[int], k: int) -> None:
+        n = len(nums)
+        k %= n                   # handle k ≥ n
+        if k == 0:
+            return
+
+        def reverse(l: int, r: int) -> None:
+            while l < r:
+                nums[l], nums[r] = nums[r], nums[l]
+                l += 1
+                r -= 1
+
+        # 1. reverse whole array
+        reverse(0, n - 1)
+        # 2. reverse first k elements
+        reverse(0, k - 1)
+        # 3. reverse the rest
+        reverse(k, n - 1)
+```
+# Day-25 | 23/7/25  
+LeetCode 122. Best Time to Buy and Sell Stock II (Medium)
+
+---
+
+## 🎯 Problem in one line
+Maximize profit by buying & selling a stock any number of times, **holding at most one share at a time**.
+
+---
+
+## ✅ Greedy O(n) Solution
+
+```python
+class Solution:
+    def maxProfit(self, prices: list[int]) -> int:
+        max_profit = 0
+        for i in range(1, len(prices)):
+            # capture every uphill segment
+            if prices[i] > prices[i - 1]:
+                max_profit += prices[i] - prices[i - 1]
+        return max_profit
+```
+# Day-26 | 24/7/25  
+LeetCode 13. Roman to Integer (Easy)
+
+---
+
+## 🎯 Problem in one line  
+Convert a **valid Roman-numeral string** into its **integer** value.
+
+---
+
+## ✅ One-Pass O(n) Solution
+
+```python
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        val = {
+            'I': 1, 'V': 5, 'X': 10, 'L': 50,
+            'C': 100, 'D': 500, 'M': 1000
+        }
+        total = 0
+        for i, ch in enumerate(s):
+            cur = val[ch]
+            # if next char is larger, subtract; else add
+            if i + 1 < len(s) and val[s[i + 1]] > cur:
+                total -= cur
+            else:
+                total += cur
+        return total
+```
+# Day-27 | 25/7/25  
+LeetCode 55. Jump Game (Medium)
+
+---
+
+## 🎯 Problem in one line
+Return **true** if you can jump from the **first** index to the **last** index of `nums`, using each element as your **maximum** jump length.
+
+---
+
+## ✅ Greedy O(n) Solution
+
+```python
+class Solution:
+    def canJump(self, nums: list[int]) -> bool:
+        farthest = 0
+        n = len(nums)
+        
+        for i in range(n):
+            if i > farthest:          # can't get here
+                return False
+            farthest = max(farthest, i + nums[i])
+            if farthest >= n - 1:     # early exit
+                return True
+        
+        return farthest >= n - 1
+```
+# Day-28 | 26/7/25  
+LeetCode 45. Jump Game II (Medium)
+
+---
+
+## 🎯 Problem in one line
+Compute the **minimum number of jumps** required to reach the **last index** starting from index `0`, where `nums[i]` is the **maximum** jump length allowed from `i`.
+
+---
+
+## ✅ Greedy O(n) Solution
+
+```python
+class Solution:
+    def jump(self, nums: list[int]) -> int:
+        n = len(nums)
+        jumps = 0
+        cur_end = 0     # farthest we can reach with current jumps
+        farthest = 0    # global farthest reachable so far
+
+        for i in range(n - 1):          # no need to jump from last index
+            farthest = max(farthest, i + nums[i])
+            
+            # when we reach the boundary provided by the previous jump
+            if i == cur_end:
+                jumps += 1
+                cur_end = farthest
+                if cur_end >= n - 1:    # early exit
+                    break
+
+        return jumps
+```
+# Day-29 | 27/7/25  
+LeetCode 274. H-Index (Medium)
+
+---
+
+## 🎯 Problem in one line
+Find the **largest** integer `h` such that **at least `h`** papers have **≥ h** citations each.
+
+---
+
+## ✅ Counting-Sort / Bucket O(n) Solution
+
+```python
+class Solution:
+    def hIndex(self, citations: list[int]) -> int:
+        n = len(citations)
+        bucket = [0] * (n + 1)  # indices 0..n
+
+        # populate bucket: index = citation count
+        for c in citations:
+            bucket[min(c, n)] += 1
+
+        # running sum of papers from the tail
+        papers = 0
+        for h in range(n, -1, -1):
+            papers += bucket[h]
+            if papers >= h:       # h papers each cited >= h times
+                return h
+        return 0

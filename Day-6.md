@@ -4,7 +4,7 @@
 
 **Difficulty:** Easy  
 **Topics:** Array, Bit Manipulation  
-**Companies:** Amazon, Microsoft, Google, Apple, Facebook
+**Companies:** Amazon,  Microsoft, Google, Apple, Facebook
 
 ---
 

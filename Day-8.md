@@ -4,7 +4,7 @@
 
 **Difficulty:** Easy  
 **Topics:** Hash Table, Linked List, Two Pointers  
-**Companies:** Amazon, Microsoft, Google, Facebook, Apple
+**Companies:** Amazon, Microsoft, Google, Facebook, Apple 
 
 ---
 

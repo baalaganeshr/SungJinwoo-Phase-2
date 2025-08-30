@@ -6,7 +6,7 @@
 
 ## 👨‍💻 About Me
 
-**Baala Ganesh** - ECE Student & Software Developer
+**Baala Ganesh** - ECE Student & Software Developer 
 - 🎯 Completed 32-day coding streak challenge 
 - 💻 Specialized in Python, AI/ML, and Web Development
 - 🚀 Building ZYRA - Software & Digital Marketing  Startup

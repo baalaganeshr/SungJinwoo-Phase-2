@@ -9,7 +9,7 @@
 **Baala Ganesh** -  ECE Student & Software Developer 
 - 🎯 Completed 32-day coding streak challenge 
 - 💻 Specialized in Python, AI/ML, and Web Development
-- 🚀 Building ZYRA -  Software & Digital Marketing  Startup 
+- 🚀 Building ZYRA -  Software & Digital Marketing  Startup  
 - 📈 Goal: ₹25,000 revenue in 30 days
 
 ## 🛠️ Tech Stack
